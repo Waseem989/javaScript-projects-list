@@ -33,7 +33,7 @@ h2 {
 }
 
 .result-container {
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(15, 15, 15, 0.4);
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -50,6 +50,7 @@ h2 {
   max-width: calc(100% - 40px);
   overflow-y: scroll;
   height: 100%;
+  color: #fff;
 }
 
 #result::-webkit-scrollbar {
