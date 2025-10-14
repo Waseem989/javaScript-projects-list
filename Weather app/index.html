@@ -59,6 +59,150 @@
       </footer>
     </div>
   </div>
+<script>
+const $ = (id)=>document.getElementById(id);
 
+const WMO = {
+  0:{t:"Clear sky", i:"☀️"},
+  1:{t:"Mainly clear", i:"🌤️"},
+  2:{t:"Partly cloudy", i:"⛅"},
+  3:{t:"Overcast", i:"☁️"},
+  45:{t:"Fog", i:"🌫️"},
+  48:{t:"Depositing rime fog", i:"🌫️"},
+  51:{t:"Light drizzle", i:"🌦️"},
+  53:{t:"Moderate drizzle", i:"🌦️"},
+  55:{t:"Dense drizzle", i:"🌧️"},
+  56:{t:"Light freezing drizzle", i:"🌧️"},
+  57:{t:"Dense freezing drizzle", i:"🌧️"},
+  61:{t:"Slight rain", i:"🌦️"},
+  63:{t:"Moderate rain", i:"🌧️"},
+  65:{t:"Heavy rain", i:"🌧️"},
+  66:{t:"Light freezing rain", i:"🌧️"},
+  67:{t:"Heavy freezing rain", i:"🌧️"},
+  71:{t:"Slight snow fall", i:"🌨️"},
+  73:{t:"Moderate snow fall", i:"🌨️"},
+  75:{t:"Heavy snow fall", i:"❄️"},
+  77:{t:"Snow grains", i:"❄️"},
+  80:{t:"Rain showers", i:"🌦️"},
+  81:{t:"Heavy rain showers", i:"🌧️"},
+  82:{t:"Violent rain showers", i:"⛈️"},
+  85:{t:"Snow showers", i:"🌨️"},
+  86:{t:"Heavy snow showers", i:"❄️"},
+  95:{t:"Thunderstorm", i:"⛈️"},
+  96:{t:"Thunderstorm w/ slight hail", i:"⛈️"},
+  99:{t:"Thunderstorm w/ heavy hail", i:"⛈️"}
+};
+
+async function geocode(city){
+  const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=en&format=json`;
+  const res = await fetch(url);
+  if(!res.ok) throw new Error("Failed to search city");
+  const data = await res.json();
+  if(!data.results || !data.results.length) throw new Error("City not found");
+  const r = data.results[0];
+  return { 
+    name: r.name, country: r.country, admin1: r.admin1 || "", 
+    lat: r.latitude, lon: r.longitude 
+  };
+}
+
+async function getWeatherByCoords(lat, lon){
+  const params = new URLSearchParams({
+    latitude: lat, longitude: lon,
+    current: "temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,wind_direction_10m,is_day",
+    hourly: "temperature_2m",
+    timezone: "auto"
+  });
+  const url = `https://api.open-meteo.com/v1/forecast?${params.toString()}`;
+  const res = await fetch(url);
+  if(!res.ok) throw new Error("Failed to fetch weather");
+  return await res.json();
+}
+
+function setLoading(is){
+  $("loading").style.display = is ? "block" : "none";
+  $("error").style.display = "none";
+}
+
+function showError(msg){
+  $("error").style.display = "block";
+  $("error").textContent = msg;
+}
+
+function renderCurrent(info, place){
+  const c = info.current;
+  const code = WMO[c.weather_code] || {t:"—", i:"❔"};
+  $("current").style.display = "flex";
+  $("meta").style.display = "grid";
+  $("icon").textContent = code.i;
+  $("temp").textContent = Math.round(c.temperature_2m) + "°C";
+  $("feel").textContent = Math.round(c.apparent_temperature) + "°C";
+  $("humid").textContent = Math.round(c.relative_humidity_2m) + "%";
+  $("wind").textContent = Math.round(c.wind_speed_10m) + " km/h";
+  $("summary").textContent = code.t + (c.precipitation ? ` · Precip: ${c.precipitation} mm` : "");
+  $("cityline").textContent = `${place.name}${place.admin1?`, ${place.admin1}`:""}, ${place.country}`;
+}
+
+function renderHourly(info){
+  const hours = info.hourly.time.slice(0,12).map((t,i)=>{
+    const hh = new Date(t).toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"});
+    const temp = Math.round(info.hourly.temperature_2m[i]);
+    return `${hh}: ${temp}°C`;
+  });
+  $("hourly").classList.remove("muted");
+  $("hourly").style.whiteSpace = "pre-wrap";
+  $("hourly").textContent = hours.join("\n");
+}
+
+async function searchCity(){
+  const q = $("city").value.trim();
+  if(!q) return;
+  setLoading(true);
+  try{
+    const place = await geocode(q);
+    const wx = await getWeatherByCoords(place.lat, place.lon);
+    renderCurrent(wx, place);
+    renderHourly(wx);
+  }catch(err){
+    showError(err.message || "Something went wrong");
+  }finally{
+    setLoading(false);
+  }
+}
+
+$("go").addEventListener("click", searchCity);
+$("city").addEventListener("keydown", (e)=>{
+  if(e.key === "Enter") searchCity();
+});
+$("geo").addEventListener("click", async ()=>{
+  if(!navigator.geolocation){
+    showError("Geolocation not supported in this browser.");
+    return;
+  }
+  setLoading(true);
+  navigator.geolocation.getCurrentPosition(async (pos)=>{
+    try{
+      const lat = pos.coords.latitude, lon = pos.coords.longitude;
+      const wx = await getWeatherByCoords(lat, lon);
+      const place = {name:"My location", country:"", admin1:"", lat, lon};
+      renderCurrent(wx, place);
+      renderHourly(wx);
+    }catch(err){
+      showError(err.message || "Could not fetch weather for your location.");
+    }finally{
+      setLoading(false);
+    }
+  }, (err)=>{
+    setLoading(false);
+    showError("Location permission denied.");
+  });
+});
+
+// Optional: Start with a default city to showcase
+(async ()=>{
+  $("city").value = "Lahore";
+  await searchCity();
+})();
+</script>
 </body>
 </html>
