@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+      <div class="app">
+    <div class="card">
+      <header>
+        <div class="logo">WX</div>
+        <h1>Weather</h1>
+        <div class="spacer"></div>
+        <div class="search">
+          <input id="city" placeholder="Search city… e.g., Lahore, Karachi, Dubai" autocomplete="off"/>
+          <button id="go">Search</button>
+          <button class="btn-geo" id="geo">Use my location</button>
+        </div>
+      </header>
+
+      <div class="grid">
+        <section class="panel">
+          <div id="loading" class="muted" style="display:none">Loading…</div>
+          <div id="error" class="err" style="display:none"></div>
+          <div id="current" class="current" style="display:none">
+            <div class="icon" id="icon">⛅</div>
+            <div>
+              <div class="temp" id="temp">--°C</div>
+              <div class="cityline" id="cityline"></div>
+              <div class="muted" id="summary"></div>
+            </div>
+          </div>
+          <div class="meta" id="meta" style="display:none">
+            <div class="kv">
+              <span class="muted">Feels like</span>
+              <b id="feel">--°C</b>
+            </div>
+            <div class="kv">
+              <span class="muted">Humidity</span>
+              <b id="humid">--%</b>
+            </div>
+            <div class="kv">
+              <span class="muted">Wind</span>
+              <b id="wind">-- km/h</b>
+            </div>
+          </div>
+        </section>
+
+        <aside class="panel">
+          <h3 style="margin:0 0 8px 0">Next hours</h3>
+          <div id="hourly" class="muted" style="font-size:14px">Search a city to see the hourly forecast.</div>
+        </aside>
+      </div>
+
+      <footer>
+        <div>Data by Open‑Meteo (no API key)</div>
+        <div class="chip">Tip: press Enter to search</div>
+      </footer>
+    </div>
+  </div>
+
+</body>
+</html>
