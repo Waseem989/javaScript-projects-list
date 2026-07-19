@@ -1,0 +1,41 @@
+body {
+  font-family: 'Comic Sans MS', sans-serif;
+  background-color: #fdf6e3;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.container {
+  padding: 30px;
+  border: 4px dashed #ff6347;
+  background-color: #fff;
+  width: 400px;
+  margin: auto;
+  border-radius: 20px;
+  box-shadow: 5px 5px 20px rgba(0,0,0,0.2);
+}
+
+button {
+  background-color: #ff4500;
+  color: white;
+  padding: 10px 20px;
+  margin: 15px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+button:hover {
+  background-color: #ff6347;
+}
+
+.output {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  background: #eee;
+  padding: 15px;
+  border-radius: 10px;
+}
