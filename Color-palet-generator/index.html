@@ -1,0 +1,156 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="src/output.css" rel="stylesheet">
+
+    <title>Color Pallet Generator</title>
+</head>
+
+<body class="min-h-screen bg-blue-400">
+
+    <div class="mx-auto mt-10 w-11/12 rounded-2xl bg-amber-50 px-4 py-8 md:w-1/2">
+
+        <!-- TITLE -->
+        <div class="mb-8 text-center">
+
+            <h1 class="text-xl font-bold underline decoration-amber-400 decoration-2 underline-offset-8">
+                COLOR PALLET GENERATOR
+            </h1>
+
+
+            <div class="flex"> 
+             
+            <button
+                class="btngenerate mt-6 rounded-3xl bg-blue-700 px-6 py-2 font-semibold text-white transition hover:bg-blue-800 self-start w-40 ">
+                ♺ Generate
+            </button>
+            </div>
+
+
+        </div>
+
+
+        <!-- COLORS -->
+        <div class="grid grid-cols-2 gap-6 md:grid-cols-5">
+
+            <!-- COLOR 1 -->
+            <div class="text-center">
+
+                <div class="colordv h-24 w-full rounded-t-2xl bg-gray-600"></div>
+
+                <div class="flex items-center justify-center gap-2 py-2">
+
+                    <h4 class="text-sm font-semibold">
+                        #FCD34D
+                    </h4>
+
+                    <span class="cursor-pointer">
+                        <i data-lucide="copy" class="h-4 w-4"></i>
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- COLOR 2 -->
+            <div class="text-center">
+
+                <div class="colordv h-24 w-full rounded-t-2xl bg-fuchsia-400"></div>
+
+                <div class="flex items-center justify-center gap-2 py-2">
+
+                    <h4 class="text-sm font-semibold">
+                        #F87171
+                    </h4>
+
+                    <span class="cursor-pointer">
+                        <i data-lucide="copy" class="h-4 w-4"></i>
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- COLOR 3 -->
+            <div class="text-center">
+
+                <div class="colordv h-24 w-full rounded-t-2xl  bg-emerald-500"></div>
+
+                <div class="flex items-center justify-center gap-2 py-2">
+
+                    <h4 class="text-sm font-semibold">
+                        #4ADE80
+                    </h4>
+
+                    <span class="cursor-pointer">
+                        <i data-lucide="copy" class="h-4 w-4"></i>
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- COLOR 4 -->
+            <div class="text-center">
+
+                <div class="colordv h-24 w-full rounded-t-2xl bg-blue-500"></div>
+
+                <div class="flex items-center justify-center gap-2 py-2">
+
+                    <h4 class="text-sm font-semibold">
+                        #C084FC
+                    </h4>
+
+                    <span class="cursor-pointer">
+                        <i data-lucide="copy" class="h-4 w-4"></i>
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- COLOR 5 -->
+            <div class="text-center">
+
+                <div class="colordv h-24 w-full rounded-t-2xl  bg-amber-700 "></div>
+
+                <div class="flex items-center justify-center gap-2 py-2">
+
+                    <h4 class="text-sm font-semibold">
+                        #60A5FA
+                    </h4>
+
+                    <span class="cursor-pointer">
+                        <i data-lucide="copy" class="h-4 w-4"></i>
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- LUCIDE -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="script.js"></script>
+
+    <script>
+        lucide.createIcons();
+    </script>
+
+</body>
+
+</html>
+```

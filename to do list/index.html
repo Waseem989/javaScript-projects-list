@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To do list</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class=" bg-black">
+    <div class="mx-auto w-1/2 bg-slate-800 mt-10 rounded-2xl flex items-center justify-center flex-col ">
+        <h1 class="text-white">To do list</h1>
+        <div class="tasks">
+            <div>
+                <input type="text" class=" input bg-white text black">
+                <button class=" btn bg-black text-white w-auto">Add</button>
+            </div>
+            <ul class="list">
+         
+            </ul>
+        </div>
+    </div>
+    <script> 
+        let input=document.querySelector(".input");
+        let btn=document.querySelector(".btn");
+        let list=document.querySelector(".list");
+        
+        btn.addEventListener("click", ()=>{
+
+            if(input.value.trim()==""){
+
+                alert("please enter for add");
+                return;
+            }
+            let li=document.createElement("li");
+            let del=document.createElement("button");
+            del.innerText="delete"
+            li.innerText=input.value;
+            li.appendChild(del);
+            list.appendChild(li);
+        
+            input.value="";
+            
+
+        });
+        
+    </script>
+</body>
+</html>
